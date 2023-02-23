@@ -4,6 +4,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"net/http"
 	"simple-rest-api/internal/handlers"
+	"simple-rest-api/pkg/logging"
 )
 
 const (
@@ -12,10 +13,13 @@ const (
 )
 
 type handler struct {
+	logger logging.Logger
 }
 
-func NewHandler() handlers.Handler {
-	return &handler{}
+func NewHandler(logger logging.Logger) handlers.Handler {
+	return &handler{
+		logger: logger,
+	}
 }
 
 func (h *handler) Register(router *httprouter.Router) {
@@ -28,6 +32,7 @@ func (h *handler) Register(router *httprouter.Router) {
 }
 
 func (h *handler) GetList(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("users list!"))
 }
